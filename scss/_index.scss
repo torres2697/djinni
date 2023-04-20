@@ -87,82 +87,13 @@
   }
 }
 
-// select-language
-.select {
-  max-width: 76px;
-  width: 100%;
-  position: relative;
-  margin-left: 10px;
-}
-
-.new-select {
-  position: relative;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  display: inline;
-}
-
-.new-select__list {
-  position: absolute;
-  top: 45px;
-  left: 0;
-  border: 1px solid #ced4da;
-  cursor: pointer;
-  width: auto;
-  z-index: 2;
-  background: #fff;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-.new-select__list.on {
-  display: block;
-}
-
-.new-select__item span {
-  display: block;
-  padding: 10px 15px;
-}
-
-.new-select__item span:hover {
-  color: #292929;
-}
-
-.new-select:after {
-  content: "";
-  display: block;
-  width: 24px;
-  height: 24px;
-  position: absolute;
-  right: -24px;
-  top: 50%;
-  background: url("../img/chevron-down-small.png") no-repeat right center /
-    cover;
-
-  -webkit-transition: all 0.27s ease-in-out;
-  -o-transition: all 0.27s ease-in-out;
-  transition: all 0.27s ease-in-out;
-
-  -webkit-transform: rotate(0deg) translateY(-50%);
-  -ms-transform: rotate(0deg) translateY(-50%);
-  transform: rotate(0deg) translateY(-50%);
-}
-
-.new-select.on:after {
-  -webkit-transform: rotate(180deg) translateY(50%);
-      -ms-transform: rotate(180deg) translateY(50%);
-          transform: rotate(180deg) translateY(50%);;
-}
-
 // wrapper
 .wrapper {
   padding: 40px 0;
   // aside
+  .aside{
+    margin-top: 10px;
+  }
   .tabs li {
     font-weight: 700;
     font-size: 16px;
@@ -332,4 +263,76 @@
       color: #292929;
     }
   }
+}
+
+// select-language
+.select {
+  max-width: 76px;
+  width: 100%;
+  position: relative;
+  margin-left: 10px;
+}
+
+.new-select {
+  position: relative;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: inline;
+}
+
+.new-select__list {
+  position: absolute;
+  top: 45px;
+  left: 0;
+  border: 1px solid #ced4da;
+  cursor: pointer;
+  width: auto;
+  z-index: 2;
+  background: #fff;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.new-select__list.on {
+  display: block;
+}
+
+.new-select__item span {
+  display: block;
+  padding: 10px 15px;
+}
+
+.new-select__item span:hover {
+  color: #292929;
+}
+
+.new-select:after {
+  content: "";
+  display: block;
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  right: -24px;
+  top: 50%;
+  background: url("../img/chevron-down-small.png") no-repeat right center /
+    cover;
+
+  -webkit-transition: all 0.27s ease-in-out;
+  -o-transition: all 0.27s ease-in-out;
+  transition: all 0.27s ease-in-out;
+
+  -webkit-transform: rotate(0deg) translateY(-50%);
+  -ms-transform: rotate(0deg) translateY(-50%);
+  transform: rotate(0deg) translateY(-50%);
+}
+
+.new-select.on:after {
+  -webkit-transform: rotate(180deg) translateY(50%);
+      -ms-transform: rotate(180deg) translateY(50%);
+          transform: rotate(180deg) translateY(50%);;
 }
