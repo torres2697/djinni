@@ -83,3 +83,163 @@ jQuery(document).ready(function ($) {
     });
   });
 });
+
+// infinite pagination
+const quotesEl = document.querySelector('.main__wrapper');
+const loaderEl = document.querySelector('.loader');
+
+// get the quotes from API
+const getQuotes = async (page, limit) => {
+    // const API_URL = `https://api.javascripttutorial.net/v1/quotes/?page=${page}&limit=${limit}`;
+    const API_URL = `https://picsum.photos/v2/list?page=${page}&limit=${limit}`;
+    const response = await fetch(API_URL);
+    // handle 404
+    if (!response.ok) {
+        throw new Error(`An error occurred: ${response.status}`);
+    }
+    return await response.json();
+}
+
+// show the quotes
+const showQuotes = (quotes) => {
+    quotes.forEach(quote => {
+        const quoteEl = document.createElement('div');
+        quoteEl.classList.add('main__card');
+
+        quoteEl.innerHTML = `
+
+        <span>${quote.id})</span>
+        <div class="main__card_content">
+            <h3>
+            ${quote.author}
+            </h3>
+            <p>
+            ${quote.quote}
+            </p>
+            <a href="#" class="main__show-more">
+                Show more...
+            </a>
+            <div class="main__card_bottom d-flex align-items-center">
+                <a href="#" class="main__save main__btn">
+                    Save to collection
+                </a>
+                <a href="#" class="main__share main__btn">
+                    Share
+                </a>
+            </div>
+        </div>
+    `;
+
+        quotesEl.appendChild(quoteEl);
+    });
+};
+
+const hideLoader = () => {
+    loaderEl.classList.remove('show');
+};
+
+const showLoader = () => {
+    loaderEl.classList.add('show');
+};
+
+const hasMoreQuotes = (page, limit, total) => {
+    const startIndex = (page - 1) * limit + 1;
+    return total === 0 || startIndex < total;
+};
+
+// load quotes
+const loadQuotes = async (page, limit) => {
+
+    // show the loader
+    showLoader();
+
+    // 0.5 second later
+    setTimeout(async () => {
+        try {
+            // if having more quotes to fetch
+            if (hasMoreQuotes(page, limit, total)) {
+                // call the API to get quotes
+                const response = await getQuotes(page, limit);
+                // show quotes
+                showQuotes(response.data);
+                // update the total
+                total = response.total;
+            }
+        } catch (error) {
+            console.log(error.message);
+        } finally {
+            hideLoader();
+        }
+    }, 500);
+
+};
+
+// control variables
+let currentPage = 1;
+const limit = 10;
+let total = 0;
+
+
+window.addEventListener('scroll', () => {
+    const {
+        scrollTop,
+        scrollHeight,
+        clientHeight
+    } = document.documentElement;
+
+    if (scrollTop + clientHeight >= scrollHeight - 5 &&
+        hasMoreQuotes(currentPage, limit, total)) {
+        currentPage++;
+        loadQuotes(currentPage, limit);
+    }
+}, {
+    passive: true
+});
+
+// initialize
+loadQuotes(currentPage, limit);
+
+
+
+
+
+// darkMode
+
+// check for saved 'darkMode' in localStorage
+let darkMode = localStorage.getItem('darkMode'); 
+
+const darkModeToggle = document.querySelector('#dark-mode-toggle');
+
+const enableDarkMode = () => {
+  // 1. Add the class to the body
+  document.body.classList.add('darkmode');
+  // 2. Update darkMode in localStorage
+  localStorage.setItem('darkMode', 'enabled');
+}
+
+const disableDarkMode = () => {
+  // 1. Remove the class from the body
+  document.body.classList.remove('darkmode');
+  // 2. Update darkMode in localStorage 
+  localStorage.setItem('darkMode', null);
+}
+ 
+// If the user already visited and enabled darkMode
+// start things off with it on
+if (darkMode === 'enabled') {
+  enableDarkMode();
+}
+
+// When someone clicks the button
+darkModeToggle.addEventListener('click', () => {
+  // get their darkMode setting
+  darkMode = localStorage.getItem('darkMode'); 
+  
+  // if it not current enabled, enable it
+  if (darkMode !== 'enabled') {
+    enableDarkMode();
+  // if it has been enabled, turn it off  
+  } else {  
+    disableDarkMode(); 
+  }
+});
