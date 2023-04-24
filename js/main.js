@@ -219,14 +219,11 @@ window.addEventListener(
     localStorage.setItem("darkMode", null);
   };
 
-  if (!darkMode) {
-    if (window.matchMedia("(prefers-color-scheme: dark)")) {
-      enableDarkMode();
-    }
-  } else {
-    if (darkMode === "enabled") {
-      enableDarkMode();
-    }
+  if (
+    (!darkMode && window.matchMedia("(prefers-color-scheme: dark)")) ||
+    darkMode === "enabled"
+  ) {
+    enableDarkMode();
   }
 
   darkModeToggle.addEventListener("click", () => {
